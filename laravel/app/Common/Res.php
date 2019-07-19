@@ -72,7 +72,7 @@ class Res
      * @param mixed $data 返回的数据
      * @param \Closure|null $callback 处理返回的数据回调函数
      * @param bool $cut_prefix 是否去掉字段的前缀
-     * @return \Illuminate\Http\JsonResponse
+     * @return array|\Illuminate\Http\JsonResponse
      * Author : KANG
      * Date   : 2019/7/16
      * Time   : 18:54
@@ -97,7 +97,7 @@ class Res
         } else {
             $debug = null;
         }
-        return response()->json(['code' => $code, 'msg' => $msg, 'data' => $data, 'debug' => $debug]);
+        return ['code' => $code, 'msg' => $msg, 'data' => $data, 'debug' => $debug];
     }
 
     /**

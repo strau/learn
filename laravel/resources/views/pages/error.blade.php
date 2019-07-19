@@ -5,6 +5,6 @@
     <title>出错啦~</title>
 </head>
 <body>
-    <h2>{{$res['msg'][0] or '出错啦~'}}</h2>
+    <h2>{{$res['msg'] or '出错啦~'}}</h2>
 </body>
 </html>

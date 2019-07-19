@@ -14,9 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-Route::group([],function() {
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+Route::middleware(['api'])->group(function() {
+    //用户注册
     Route::post('/user/register', 'Home\UserController@register')->name('user-register');
+    //用户登录
+    Route::post('/user/login', 'Home\UserController@login')->name('user-login');
 });
