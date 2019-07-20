@@ -49,4 +49,41 @@ class UserController extends BaseController
 
         return $userLogic->login($user_phone, $user_password);
     }
+
+    /**
+     * 根据用户id获取用户数据
+     *
+     * @param UserLogic $userLogic
+     * @return array|\Illuminate\Http\JsonResponse
+     * Author : KANG
+     * Date   : 2019/7/20
+     * Time   : 16:11
+     */
+    public function user(UserLogic $userLogic)
+    {
+        $user_id = (int) $this->request->id;    //用户id
+        $user    = $userLogic->user($user_id);
+        if (!$user) {
+            return Res::response(Res::CODE_NO_DATA, '暂无数据');
+        }
+
+        return Res::response(Res::CODE_SUCCESS, 'OK', $user, function($v) {
+            unset($v->deleted_at);
+            return $v;
+        });
+    }
+
+    //获取用户列表
+    public function users(UserLogic $userLogic)
+    {
+        $users = $userLogic->users();
+        if ($users->isEmpty()) {
+            return Res::response(Res::CODE_NO_DATA, '暂无数据');
+        }
+
+        return Res::response(Res::CODE_SUCCESS, 'OK', $users, function($user) {
+            unset($user->deleted_at);
+            return $user;
+        });
+    }
 }

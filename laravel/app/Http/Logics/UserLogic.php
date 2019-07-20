@@ -120,8 +120,33 @@ class UserLogic extends BaseLogic
 //        if (!$token) {
 //            return Res::response(Res::CODE_DATA_ERR, '用户名或密码错误');
 //        }
-        //加密token
-//        $token = encrypt($token);
+        if (config('app.encrypt_token')) {
+            //加密token
+            $token = encrypt($token);
+        }
         return Res::response(Res::CODE_SUCCESS, '登录成功', ['token' => $token]);
+    }
+
+    /**
+     * 根据用户id获取用户数据
+     *
+     * @param $user_id
+     * @return array|\Illuminate\Http\JsonResponse
+     * Author : KANG
+     * Date   : 2019/7/20
+     * Time   : 15:53
+     */
+    public function user($user_id)
+    {
+        $user = UserModel::find($user_id);
+        return $user;
+    }
+
+    //获取用户列表
+    //TODO:分页
+    public function users()
+    {
+        $users = UserModel::get();
+        return $users;
     }
 }

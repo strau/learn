@@ -22,4 +22,11 @@ Route::middleware(['api'])->group(function() {
     Route::post('/user/register', 'Home\UserController@register')->name('user-register');
     //用户登录
     Route::post('/user/login', 'Home\UserController@login')->name('user-login');
+
+    Route::middleware('jwt')->group(function() {
+        //根据用户id获取用户数据
+        Route::get('/user', 'Home\UserController@user')->name('user');
+        //获取用户列表
+        Route::get('/users', 'Home\UserController@users')->name('users');
+    });
 });
