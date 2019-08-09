@@ -14,9 +14,16 @@ class CreateProductAttributeTable extends Migration
     public function up()
     {
         Schema::create('product_attribute', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
+            $table->increments('pattr_id');
+            $table->integer('pattr_product_id')->unsigned()->comment('商品id');
+            $table->string('pattr_name', 255)->collation('utf8mb4_unicode_ci')->comment('自定义属性名称');
+            $table->integer('pattr_sort')->unsigned()->comment('辅助排序字段');
+
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
         });
+        \DB::statement("ALTER TABLE `product_attribute` comment '自定义属性表'");
     }
 
     /**

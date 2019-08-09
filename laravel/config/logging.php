@@ -89,6 +89,20 @@ return [
             'driver' => 'errorlog',
             'level' => 'debug',
         ],
+
+        //添加的日志channel
+        'database' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/database/database_error.log'),
+            'level' => 'debug',
+        ],
+
+        'info' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/info/laravel.log'),
+            'level' => 'debug',
+            'days' => 31,
+        ],
     ],
 
 ];

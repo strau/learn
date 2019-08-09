@@ -93,11 +93,12 @@ class Res
                 $data = $data->toArray();
             }
             if (is_array($data)) {
-                //数组或集合
+                //数组或集合，遍历调用自定义函数，
                 foreach ($data as $key => &$value) {
                     $value = call_user_func_array($callback, [$value, $key]);
                 }
             } else {
+                //
                 $data = call_user_func_array($callback, [$data]);
             }
         }
