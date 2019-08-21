@@ -4,16 +4,25 @@ namespace App\Http\Controllers;
 
 //测试控制器
 use App\Events\ExampleEvent;
+use App\Exceptions\DatabaseException;
+use App\Http\Controllers\Algorithms\Sort\Bubble;
+use App\Http\Controllers\Algorithms\Sort\Quick;
+use App\Http\Controllers\Algorithms\Sort\Selection;
+use App\Http\Controllers\Algorithms\Sort\SortFactory;
 use App\Http\Controllers\ElasticSearch\ElasticSearch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class RunController extends Controller
 {
-    public function run(Request $request)
+    public function run(Request $request, SortFactory $sortFactory)
     {
-//        return $this->testElasticSearch(new ElasticSearch($request));
+        return $this->sort($sortFactory);
     }
+
+
+
+
 
 /** ************************************************************************************************* */
     //测试自定义记录路径的日志
@@ -36,5 +45,32 @@ class RunController extends Controller
     public function testElasticSearch(ElasticSearch $elasticSearch)
     {
         return $elasticSearch->createIndex();
+    }
+
+    /**
+     * @throws DatabaseException
+     * User: KANG
+     * Date: 2019/8/21
+     * Time: 16:52
+     */
+    public function testException()
+    {
+//        abort(404);
+        throw new DatabaseException();
+    }
+
+    /**
+     * @param SortFactory $sortFactory
+     * @return mixed
+     * @throws \Exception
+     * User: KANG
+     * Date: 2019/8/21
+     * Time: 16:52
+     */
+    public function sort(SortFactory $sortFactory)
+    {
+        return $sortFactory->getSortMethod(Quick::class)->sort();
+        return $sortFactory->getSortMethod(Selection::class)->sort();
+        return $sortFactory->getSortMethod(Bubble::class)->sort();
     }
 }

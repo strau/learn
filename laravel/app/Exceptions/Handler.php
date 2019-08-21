@@ -2,8 +2,10 @@
 
 namespace App\Exceptions;
 
+use App\Common\Res;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +48,16 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($request->expectsJson()) {
+            if ($exception instanceof NotFoundHttpException) {
+                //404
+                return response()->json(['code' => 404]);
+            }
+//            if ($exception instanceof DatabaseException) {
+//                //自定义异常
+//                return response()->json(['code' => 500]);
+//            }
+        }
         return parent::render($request, $exception);
     }
 }
