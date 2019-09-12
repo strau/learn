@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Log;
 
 class RunController extends Controller
 {
-    public function run(Request $request, SortFactory $sortFactory)
+    public function run(Request $request, SortFactory $sortFactory, ElasticSearch $elasticSearch)
     {
-        return $this->sort($sortFactory);
+        return $this->testElasticSearch($elasticSearch);
     }
 
 
@@ -44,7 +44,8 @@ class RunController extends Controller
     //测试ES搜索引擎
     public function testElasticSearch(ElasticSearch $elasticSearch)
     {
-        return $elasticSearch->createIndex();
+        return $elasticSearch->getClient()
+            ->indices()->stats();
     }
 
     /**

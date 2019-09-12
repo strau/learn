@@ -62,8 +62,39 @@ class ElasticSearch extends Controller
                 ]
             ]
         ];
+        /*
+         * [
+         *      'body' => [
+         *          'query' => [
+         *              'bool' => [
+         *                  'must' => [
+         *                      ['match' => ['title' => 'Father']],
+         *                      ['match' => ['genre' => 'Comedy']]
+         *                  ]
+         *              ]
+         *          ]
+         *      ]
+         *  ]
+         */
 
         $response = $this->getClient()->search($param);
+        return $response;
+    }
+
+    public function updateDocument()
+    {
+        $param = [
+            'index' => 'my_index',
+            'id'    => 'my_id',
+            'body'  => [
+                'doc' => [
+                    'testField' => 'abcdef',
+                    'newField'  => 'newValue'
+                ]
+            ]
+        ];
+
+        $response = $this->getClient()->update($param);
         return $response;
     }
 
@@ -102,5 +133,12 @@ class ElasticSearch extends Controller
 
         $response = $this->getClient()->indices()->create($param);
         return $response;
+    }
+
+    public function indexManagement()
+    {
+        return $this->getClient()->indices()->stats();
+//        return $this->getClient()->nodes()->stats();
+//        return $this->getClient()->cluster()->stats();
     }
 }

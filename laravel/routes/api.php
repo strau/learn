@@ -29,4 +29,8 @@ Route::middleware(['api'])->group(function() {
         //获取用户列表
         Route::get('/users', 'Home\UserController@users')->name('users');
     });
+
+    Route::resource('/cruds', 'TestVue\CrudsController', [
+        'except' => ['edit', 'show', 'store']
+    ]);
 });
